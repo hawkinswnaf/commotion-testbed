@@ -5,6 +5,7 @@ flash_timestamp_file="$build_home_dir/timestamp"
 flash_log_dir="$build_home_dir/logs/"
 nodes="2 3 4 5 6 8"
 node_tmp_dir="/tmp"
+extra_ssh_options="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 function need_flash {
 	compare=$1
@@ -29,7 +30,7 @@ function upload_image {
 	fi
 	echo "node:" $node
 	echo "image:" $image
-	scp $image root@$node:/$node_tmp_dir/ >> "$ts_flash_log_dir"/"$node".log
+	scp $extra_ssh_options $image root@$node:/$node_tmp_dir/ >> "$ts_flash_log_dir"/"$node".log
 }
 
 function flash_image {
@@ -43,7 +44,7 @@ function flash_image {
 	fi
 	echo "node:" $node
 	echo "image:" $image
-	ssh root@$node -o ServerAliveInterval=5 -C "sysupgrade -n /$node_tmp_dir/$image" >> "$ts_flash_log_dir"/"$node".log &
+	ssh root@$node $extra_ssh_options -o ServerAliveInterval=5 -C "sysupgrade -n /$node_tmp_dir/$image" >> "$ts_flash_log_dir"/"$node".log &
 }
 function upload_images {
 	base=$1
