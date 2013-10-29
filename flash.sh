@@ -13,7 +13,7 @@ function need_flash {
 		return 0
 	fi
 
-	for i in `find builds -anewer $compare`; do
+	for i in `find builds -cnewer $compare -or -anewer $compare`; do
 		return 1
 	done
 	return 0
