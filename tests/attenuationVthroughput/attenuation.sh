@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source ../ip_addrs.sh
-source ../mac_addrs.sh
-source ../ssh_options.sh
+source ../../common/ip_addrs.sh
+source ../../common/mac_addrs.sh
+source ../../common/ssh_options.sh
 attenuation_start=30
 attenuation_end=70
 
